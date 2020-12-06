@@ -9,11 +9,11 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
+// Set Global Variables
 let employeeArray = [];
 let employeeID = 1;
 let employeeInfo = {};
-
+// Array of questions that node will prompt
 let questions = [
   {
     type: "input",
@@ -26,6 +26,7 @@ let questions = [
     name: "email",
   },
   {
+    //   this one is important. This is where we will later use a switch statement to ask different questions.
     message: "Employee role question",
     name: "specificQuestion",
   },
@@ -36,7 +37,7 @@ let questions = [
     choices: ["Engineer", "Intern", "no more employees to add"],
   },
 ];
-
+// Function that starts inquirer
 let newEmployeeQuestion = (specificQuestion, role) => {
   questions[2].message = specificQuestion;
 
@@ -56,7 +57,7 @@ let newEmployeeQuestion = (specificQuestion, role) => {
     storeEmployees(employeeInfo, response.role);
   });
 };
-
+// When choosing in node, using an if else statement to make sure it goes through each possible variable.
 let storeEmployees = (employee, nextEmployee) => {
   if (employee.role === "Manager") {
     var newEmployee = new Manager(
@@ -80,9 +81,11 @@ let storeEmployees = (employee, nextEmployee) => {
       employee.specificQuestion
     );
   }
+//   push the array to the new Employee variable
   employeeArray.push(newEmployee);
+//   Add one to the ID
   employeeID++;
-
+// this is going through and picking what to say dependent on what the user chose
   switch (nextEmployee) {
     case "Manager":
       newEmployeeQuestion("Employee's office number?", "Manager");
@@ -94,13 +97,14 @@ let storeEmployees = (employee, nextEmployee) => {
       newEmployeeQuestion("What school did the employee attend?", "Intern");
       break;
       case "no more employees to add":
+        //   When done inputing your data, this render method will start making the HTML
       let htmlRender = render(employeeArray);
       writeHTML(htmlRender);
       default:
           return;
   }
 };
-
+// Finishing by creating the HTML file
 let writeHTML = (htmlRender) => {
 
     fs.writeFile(outputPath, htmlRender, (err) => {
@@ -113,6 +117,7 @@ let writeHTML = (htmlRender) => {
     });
 
 }
+// Starting everything off as Manager
 newEmployeeQuestion("Employee's office number? ", "Manager")
 
 
