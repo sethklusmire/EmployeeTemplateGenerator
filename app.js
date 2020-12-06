@@ -31,7 +31,7 @@ let questions = [
   },
   {
     type: "list",
-    message: "What is your role in the company?",
+    message: "Employee's role in the company?",
     name: "role",
     choices: ["Engineer", "Intern", "no more employees to add"],
   },
@@ -63,21 +63,21 @@ let storeEmployees = (employee, nextEmployee) => {
       employee.name,
       employee.id,
       employee.email,
-      employee.uniqueQuestion
+      employee.specificQuestion
     );
   } else if (employee.role === "Engineer") {
     var newEmployee = new Engineer(
       employee.name,
       employee.id,
       employee.email,
-      employee.uniqueQuestion
+      employee.specificQuestion
     );
   } else {
     var newEmployee = new Intern(
       employee.name,
       employee.id,
       employee.email,
-      employee.uniqueQuestion
+      employee.specificQuestion
     );
   }
   employeeArray.push(newEmployee);
@@ -85,10 +85,10 @@ let storeEmployees = (employee, nextEmployee) => {
 
   switch (nextEmployee) {
     case "Manager":
-      newEmployeeQuestion("What is the employee's office number?", "Manager");
+      newEmployeeQuestion("Employee's office number?", "Manager");
       break;
     case "Engineer":
-      newEmployeeQuestion("What is the employee's github?", "Engineer");
+      newEmployeeQuestion("Employee's github?", "Engineer");
       break;
     case "Intern":
       newEmployeeQuestion("What school did the employee attend?", "Intern");
@@ -113,7 +113,7 @@ let writeHTML = (htmlRender) => {
     });
 
 }
-newEmployeeQuestion("What is the employee's office number? ", "Manager")
+newEmployeeQuestion("Employee's office number? ", "Manager")
 
 
 
